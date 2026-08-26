@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="An interactive, auditable FP&A cash runway and workforce planning simulator." />
+  <meta name="theme-color" content="#0b0d10" />
+  <title>RunwayOS — FP&A Decision Studio</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark">R</span><span>RunwayOS</span><span class="beta">PORTFOLIO</span></div>
+    <nav aria-label="Primary navigation">
+      <button class="nav-item active" data-view="overview"><span>01</span>Command center</button>
+      <button class="nav-item" data-view="scenarios"><span>02</span>Scenario lab</button>
+      <button class="nav-item" data-view="workforce"><span>03</span>Workforce plan</button>
+      <button class="nav-item" data-view="variance"><span>04</span>Variance review</button>
+      <button class="nav-item" data-view="memos"><span>05</span>Decision memos</button>
+    </nav>
+    <div class="sidebar-context"><p class="eyebrow">ACTIVE MODEL</p><strong>NexaFlow FY2026</strong><span>USD · Monthly · v3.2</span></div>
+    <div class="sidebar-foot"><span class="status-dot"></span><div><strong>Model reconciled</strong><span>12 checks passed</span></div></div>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <div><p class="eyebrow" id="view-eyebrow">NEXAFLOW · FY2026 PLAN</p><h1 id="view-title">FP&A decision studio</h1></div>
+      <div class="header-actions"><button class="icon-button" id="theme-toggle" aria-label="Toggle color theme">◐</button><button class="ghost" id="export-view">Export view</button><button class="primary" data-view-jump="scenarios">New scenario</button></div>
+    </header>
+
+    <section class="app-view active" id="overview-view">
+      <div class="model-banner"><div><span class="live-pill">LIVE</span><strong>Approved baseline</strong><span>Updated with September actuals</span></div><button class="text-button" data-view-jump="variance">Review close →</button></div>
+      <section class="hero-grid" id="metric-grid"></section>
+      <section class="workspace-grid">
+        <article class="panel cash-panel"><div class="panel-head"><div><p class="eyebrow">FORWARD VIEW</p><h2>Cash position & runway</h2></div><div class="legend"><span class="base"></span>Baseline <span class="scenario"></span>Working scenario</div></div><canvas id="cash-chart" aria-label="Monthly cash position forecast"></canvas><div class="chart-foot"><span>Minimum cash guardrail <strong>$750K</strong></span><button class="text-button" data-view-jump="scenarios">Open scenario lab →</button></div></article>
+        <article class="panel ai-brief-panel"><div class="ai-kicker"><span class="ai-orb">✦</span><span>FINANCE AI BRIEF</span><span class="verified">GROUNDED</span></div><h2 id="brief-headline">The approved plan preserves financial flexibility.</h2><p id="brief-copy">Runway remains above the 12-month guardrail while the five approved hires become active in April.</p><div class="brief-evidence"><div><span>Primary risk</span><strong>Payroll begins ahead of ARR conversion</strong></div><div><span>Recommended checkpoint</span><strong>June board review</strong></div></div><button class="ai-action" id="open-ai">Ask finance AI</button></article>
+      </section>
+      <section class="lower-grid"><article class="panel compact-panel"><div class="panel-head"><div><p class="eyebrow">PLAN HEALTH</p><h2>Management guardrails</h2></div><span class="score">82 / 100</span></div><div id="guardrails"></div></article><article class="panel compact-panel"><div class="panel-head"><div><p class="eyebrow">MONTHLY BRIDGE</p><h2>September EBITDA variance</h2></div><button class="text-button" data-view-jump="variance">Details →</button></div><div id="variance-mini"></div></article></section>
+    </section>
+
+    <section class="app-view" id="scenarios-view">
+      <div class="section-intro"><div><p class="eyebrow">NON-DESTRUCTIVE PLANNING</p><h2>Model the decision before you commit.</h2><p>Change commercial and workforce assumptions. The approved baseline stays untouched until you explicitly promote a scenario.</p></div><div class="scenario-state"><span class="status-dot"></span>Unsaved working scenario</div></div>
+      <div class="scenario-layout">
+        <aside class="panel controls-panel"><div class="control-head"><h2>Scenario assumptions</h2><button class="text-button" id="reset-scenario">Reset</button></div><label>Additional hires <output id="hires-output">5</output></label><input id="hires" type="range" min="0" max="15" value="5" /><label>Average salary <output id="salary-output">$116K</output></label><input id="salary" type="range" min="70000" max="180000" step="1000" value="116000" /><label>Monthly revenue growth <output id="growth-output">4.2%</output></label><input id="growth" type="range" min="0" max="8" step="0.1" value="4.2" /><label>Monthly churn <output id="churn-output">2.1%</output></label><input id="churn" type="range" min="0.5" max="7" step="0.1" value="2.1" /><label>Hiring starts <output id="start-output">April</output></label><input id="start-month" type="range" min="0" max="11" value="3" /><button class="ai-action" id="analyze-scenario">Analyze scenario</button></aside>
+        <div class="scenario-results"><div class="comparison-grid" id="comparison-grid"></div><article class="panel scenario-chart-panel"><div class="panel-head"><div><p class="eyebrow">CASH CURVE</p><h2>Baseline vs working scenario</h2></div><div class="legend"><span class="base"></span>Baseline <span class="scenario"></span>Scenario</div></div><canvas id="scenario-chart" aria-label="Scenario cash comparison"></canvas></article><article class="panel natural-language-panel"><div><p class="eyebrow">AI SCENARIO BUILDER</p><h2>Describe the decision in plain English</h2></div><div class="prompt-row"><input id="scenario-prompt" aria-label="Scenario request" value="Hire 8 people and delay hiring by 2 months with churn at 3.5%"/><button id="run-prompt">Build scenario</button></div><div class="prompt-chips"><button>Hire 10 people</button><button>Set churn to 4%</button><button>Delay hiring by 3 months</button></div><p class="prompt-status" id="prompt-status">The engine converts supported language into governed assumptions—never directly into financial outputs.</p></article></div>
+      </div>
+    </section>
+
+    <section class="app-view" id="workforce-view">
+      <div class="section-intro"><div><p class="eyebrow">WORKFORCE PLANNING</p><h2>Every hire has a cash consequence.</h2><p>Review approved roles, timing and fully loaded costs before they enter the forecast.</p></div><button class="primary" id="add-role">Add planned role</button></div><section class="workforce-summary" id="workforce-summary"></section><article class="panel table-panel"><div class="table-toolbar"><div><strong>FY2026 hiring plan</strong><span id="role-count">5 planned roles</span></div><input id="role-search" placeholder="Search roles or departments" aria-label="Search workforce plan" /></div><div class="table-wrap"><table><thead><tr><th>Role</th><th>Department</th><th>Start</th><th>Fully loaded cost</th><th>Priority</th><th>Status</th><th></th></tr></thead><tbody id="workforce-body"></tbody></table></div></article>
+    </section>
+
+    <section class="app-view" id="variance-view">
+      <div class="section-intro"><div><p class="eyebrow">SEPTEMBER CLOSE</p><h2>Explain performance, not just the difference.</h2><p>Every material variance includes favorability, a deterministic driver and an accountable narrative.</p></div><button class="ghost" id="download-variance">Download variance pack</button></div><section class="variance-summary" id="variance-summary"></section><div class="variance-layout"><article class="panel variance-chart-panel"><div class="panel-head"><div><p class="eyebrow">EBITDA BRIDGE</p><h2>Budget to actual</h2></div><span class="period-badge">SEP 2026</span></div><canvas id="variance-chart" aria-label="EBITDA variance waterfall"></canvas></article><article class="panel driver-panel"><p class="eyebrow">AI DRAFT COMMENTARY</p><h2>What changed?</h2><div id="commentary-list"></div><button class="ai-action" id="generate-memo">Create management memo</button></article></div><article class="panel table-panel variance-table"><div class="table-toolbar"><div><strong>Material account variances</strong><span>Threshold: ±$5K</span></div><button class="text-button">Change threshold</button></div><div class="table-wrap"><table><thead><tr><th>Account</th><th>Budget</th><th>Actual</th><th>Variance</th><th>Favorability</th><th>Driver</th></tr></thead><tbody id="variance-body"></tbody></table></div></article>
+    </section>
+
+    <section class="app-view" id="memos-view">
+      <div class="section-intro"><div><p class="eyebrow">DECISION MEMORY</p><h2>Auditable recommendations, ready for leadership.</h2><p>Each memo preserves the assumptions, model version and evidence used at the time of decision.</p></div><button class="primary" id="new-memo">Generate from scenario</button></div><div class="memo-layout"><article class="panel memo-document" id="memo-document"></article><aside class="panel memo-history"><p class="eyebrow">MEMO HISTORY</p><h2>Previous decisions</h2><button class="memo-history-item active"><strong>Hiring affordability review</strong><span>Today · v3.2</span></button><button class="memo-history-item"><strong>Q4 growth downside</strong><span>Sep 18 · v3.1</span></button><button class="memo-history-item"><strong>Vendor consolidation</strong><span>Aug 30 · v2.9</span></button></aside></div>
+    </section>
+  </main>
+
+  <aside class="ai-drawer" id="ai-drawer" aria-hidden="true"><div class="drawer-head"><div><span class="ai-orb">✦</span><div><strong>Finance AI</strong><span>Model-grounded decision partner</span></div></div><button id="close-ai" aria-label="Close finance AI">×</button></div><div class="drawer-body" id="ai-conversation"><div class="ai-message"><span>FINANCE AI</span><p>Ask about runway, hiring affordability, churn or the current variance review. I calculate through the governed model and cite every financial conclusion.</p></div></div><div class="suggested-prompts"><button>Can we afford 8 hires?</button><button>What is the biggest runway risk?</button><button>Explain September variance</button></div><form class="ai-input" id="ai-form"><input id="ai-query" placeholder="Ask a finance decision question…" aria-label="Ask finance AI"/><button>↑</button></form></aside>
+  <div class="drawer-backdrop" id="drawer-backdrop"></div><div class="toast-region" id="toast-region" aria-live="polite"></div>
+  <script src="browser-app.js"></script>
+</body>
+</html>
