@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="An interactive, auditable FP&A cash runway and workforce planning simulator." />
+  <meta name="theme-color" content="#0b0d10" />
+  <title>RunwayOS — FP&A Decision Studio</title>
+  <style>
+:root{color-scheme:dark;--bg:#090b0e;--panel:#11151a;--panel2:#151a20;--line:#252b34;--text:#f5f7f8;--muted:#8d97a6;--mint:#b7f36b;--blue:#6fa8ff;--orange:#ff9e68;--red:#ff6b75;--shadow:0 24px 70px rgba(0,0,0,.25)}
+:root.light{color-scheme:light;--bg:#eef0ec;--panel:#fbfcf8;--panel2:#f1f4ed;--line:#d9ded5;--text:#151a18;--muted:#687168;--mint:#6e9d2f;--blue:#377ddb;--orange:#c86a32;--red:#ca4650;--shadow:0 24px 70px rgba(46,58,43,.12)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(circle at 85% -5%,color-mix(in srgb,var(--mint) 10%,transparent),transparent 26%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;display:grid;grid-template-columns:244px 1fr;font-size:14px}button,input{font:inherit}button{color:inherit}.sidebar{position:sticky;top:0;height:100vh;padding:27px 20px;border-right:1px solid var(--line);display:flex;flex-direction:column;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(20px);z-index:10}.brand{display:flex;align-items:center;gap:10px;font-weight:760;letter-spacing:-.02em}.brand-mark{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:var(--mint);color:#10150b;box-shadow:0 0 34px color-mix(in srgb,var(--mint) 20%,transparent)}.beta{margin-left:auto;font-size:8px;letter-spacing:.12em;color:var(--muted);border:1px solid var(--line);padding:4px 5px;border-radius:5px}nav{display:grid;gap:5px;margin-top:44px}.nav-item{border:0;color:var(--muted);background:transparent;padding:11px 12px;text-align:left;border-radius:10px;cursor:pointer;transition:.18s ease}.nav-item span{font-size:9px;margin-right:10px;color:color-mix(in srgb,var(--muted) 55%,transparent)}.nav-item:hover{color:var(--text);background:color-mix(in srgb,var(--panel2) 70%,transparent)}.nav-item.active{color:var(--text);background:var(--panel2);box-shadow:inset 2px 0 var(--mint)}.sidebar-context{margin-top:auto;padding:14px 12px;border:1px solid var(--line);background:var(--panel);border-radius:12px;display:grid;gap:5px}.sidebar-context strong{font-size:12px}.sidebar-context>span{font-size:10px;color:var(--muted)}.sidebar-foot{margin-top:12px;padding:13px 10px;color:var(--muted);font-size:11px;border-top:1px solid var(--line);display:flex;align-items:flex-start;gap:8px}.sidebar-foot div{display:grid;gap:2px}.sidebar-foot strong{color:var(--text);font-size:11px}.sidebar-foot span:last-child{font-size:9px}.status-dot{display:inline-block;flex:0 0 auto;width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 12px var(--mint);margin-top:3px}main{width:min(1540px,100%);padding:29px 34px 54px;overflow:hidden}.topbar,.panel-head,.control-head,.table-toolbar,.chart-foot,.section-intro{display:flex;align-items:center;justify-content:space-between;gap:22px}.topbar{margin-bottom:28px}h1{margin:4px 0 0;font-size:clamp(29px,3vw,42px);line-height:1;letter-spacing:-.045em;font-weight:670}h2{margin:3px 0 0;font-size:19px;letter-spacing:-.028em}p{line-height:1.55}.eyebrow{margin:0;font-size:9px;color:var(--muted);letter-spacing:.17em;font-weight:730}.header-actions{display:flex;gap:8px}.ghost,.primary,.ai-action,.icon-button{border:1px solid var(--line);border-radius:10px;padding:10px 14px;color:var(--text);background:var(--panel);cursor:pointer;transition:.2s ease}.ghost:hover,.icon-button:hover{border-color:color-mix(in srgb,var(--muted) 55%,var(--line));transform:translateY(-1px)}.primary,.ai-action{border-color:var(--mint);background:var(--mint);color:#11170c;font-weight:730}.primary:hover,.ai-action:hover{filter:brightness(1.06);transform:translateY(-1px)}.icon-button{padding:10px 12px}.text-button{border:0;background:transparent;color:var(--muted);font-size:11px;padding:3px;cursor:pointer}.text-button:hover{color:var(--text)}.app-view{display:none;animation:fadeIn .28s ease}.app-view.active{display:block}@keyframes fadeIn{from{opacity:.3;transform:translateY(5px)}to{opacity:1;transform:none}}.model-banner{display:flex;justify-content:space-between;align-items:center;border:1px solid #314329;background:linear-gradient(90deg,color-mix(in srgb,var(--mint) 7%,var(--panel)),var(--panel));border-radius:12px;padding:11px 14px;margin-bottom:12px}.model-banner>div{display:flex;align-items:center;gap:10px;font-size:11px}.model-banner span:last-child{color:var(--muted)}.live-pill{background:var(--mint);color:#15200c;border-radius:5px;padding:3px 5px;font-weight:800;font-size:8px;letter-spacing:.08em}.hero-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.metric-card,.panel{border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,var(--panel2),var(--panel));box-shadow:0 1px 0 rgba(255,255,255,.025)}.metric-card{padding:19px;min-height:130px;position:relative;overflow:hidden}.metric-card.featured{background:linear-gradient(145deg,color-mix(in srgb,var(--mint) 12%,var(--panel)),var(--panel));border-color:color-mix(in srgb,var(--mint) 25%,var(--line))}.metric-card.featured:after{content:"";position:absolute;width:100px;height:100px;border-radius:50%;right:-48px;top:-48px;background:var(--mint);opacity:.07;filter:blur(3px)}.metric-label{color:var(--muted);font-size:11px;display:flex;justify-content:space-between}.metric-label span{font-size:9px;padding:3px 5px;border-radius:5px;background:var(--panel2)}.metric-value{margin-top:16px;font-size:29px;font-weight:680;letter-spacing:-.045em}.metric-value small{font-size:12px;color:var(--muted);font-weight:500;letter-spacing:0}.metric-note{margin-top:8px;color:var(--muted);font-size:10px}.positive{color:var(--mint)!important}.negative{color:var(--orange)!important}.workspace-grid{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(310px,.72fr);gap:12px;margin-top:12px}.panel{padding:21px}.cash-panel,.ai-brief-panel{min-height:405px}.legend{color:var(--muted);font-size:10px;display:flex;align-items:center;gap:7px}.legend span{display:inline-block;width:16px;height:2px;margin-left:7px}.legend .base{background:var(--blue)}.legend .scenario{background:var(--mint)}canvas{display:block;width:100%;height:100%}#cash-chart{height:285px;margin-top:18px}.chart-foot{padding-top:12px;border-top:1px solid var(--line);font-size:10px;color:var(--muted)}.chart-foot strong{color:var(--text)}.ai-brief-panel{display:flex;flex-direction:column;background:radial-gradient(circle at 90% 0,color-mix(in srgb,var(--mint) 9%,transparent),transparent 40%),linear-gradient(145deg,var(--panel2),var(--panel))}.ai-kicker{display:flex;align-items:center;gap:8px;font-size:9px;letter-spacing:.12em;color:var(--muted);font-weight:700}.ai-orb{display:grid;place-items:center;width:28px;height:28px;border-radius:9px;color:#12180e;background:var(--mint);font-size:13px}.verified{margin-left:auto;border:1px solid color-mix(in srgb,var(--mint) 38%,var(--line));color:var(--mint);padding:4px 6px;border-radius:5px;font-size:8px}.ai-brief-panel h2{font-size:23px;line-height:1.2;margin-top:25px}.ai-brief-panel>p{color:var(--muted);font-size:12px}.brief-evidence{display:grid;gap:11px;margin:16px 0 20px}.brief-evidence div{display:grid;gap:3px;padding-left:11px;border-left:2px solid var(--line)}.brief-evidence span{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.brief-evidence strong{font-size:11px}.ai-brief-panel .ai-action{margin-top:auto}.lower-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}.compact-panel{min-height:225px}.score{font-weight:750;color:var(--mint)}.guardrail-row{display:grid;grid-template-columns:130px 1fr 60px;align-items:center;gap:12px;margin-top:16px;font-size:10px}.guardrail-row span:first-child{color:var(--muted)}.progress{height:5px;background:var(--line);border-radius:9px;overflow:hidden}.progress i{display:block;height:100%;background:var(--mint);border-radius:9px}.guardrail-row strong{text-align:right;font-size:10px}.mini-variance-row{display:grid;grid-template-columns:130px 1fr 60px;gap:10px;align-items:center;margin-top:14px;font-size:10px}.mini-variance-row span:first-child{color:var(--muted)}.mini-bar{height:7px;background:var(--line);position:relative;border-radius:4px}.mini-bar i{display:block;height:100%;border-radius:4px;background:var(--orange)}.mini-variance-row.positive-row i{background:var(--mint)}.mini-variance-row strong{text-align:right}.section-intro{align-items:flex-end;margin:2px 0 22px;padding-bottom:20px;border-bottom:1px solid var(--line)}.section-intro h2{font-size:28px;margin-top:8px}.section-intro p:last-child{margin:8px 0 0;color:var(--muted);max-width:700px;font-size:12px}.scenario-state{font-size:10px;color:var(--muted);border:1px solid var(--line);padding:9px 12px;border-radius:9px}.scenario-state .status-dot{margin-right:7px}.scenario-layout{display:grid;grid-template-columns:310px 1fr;gap:12px}.controls-panel{align-self:start;position:sticky;top:24px}.controls-panel label{display:flex;justify-content:space-between;color:var(--muted);font-size:11px;margin:22px 0 8px}.controls-panel output{color:var(--text);font-weight:680}.controls-panel input[type=range]{width:100%;accent-color:var(--mint)}.controls-panel .ai-action{width:100%;margin-top:25px}.comparison-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.comparison-card{padding:16px;border-radius:14px;border:1px solid var(--line);background:var(--panel)}.comparison-card span{display:block;color:var(--muted);font-size:10px}.comparison-card strong{display:block;margin:10px 0 5px;font-size:21px}.comparison-card small{font-size:9px}.scenario-chart-panel{height:355px;margin-top:12px}.scenario-chart-panel canvas{height:270px;margin-top:13px}.natural-language-panel{margin-top:12px;display:grid;grid-template-columns:240px 1fr;align-items:center;column-gap:20px}.prompt-row{display:grid;grid-template-columns:1fr auto;gap:8px}.prompt-row input,.table-toolbar input,.ai-input input{width:100%;border:1px solid var(--line);background:color-mix(in srgb,var(--bg) 60%,transparent);color:var(--text);border-radius:10px;padding:11px 12px;outline:none}.prompt-row input:focus,.table-toolbar input:focus,.ai-input input:focus{border-color:var(--mint)}.prompt-row button{border:0;background:var(--mint);color:#12180d;border-radius:10px;padding:0 16px;font-weight:720;cursor:pointer}.prompt-chips{grid-column:2;display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.prompt-chips button{border:1px solid var(--line);background:var(--panel2);color:var(--muted);font-size:9px;padding:7px 9px;border-radius:999px;cursor:pointer}.prompt-status{grid-column:2;color:var(--muted);font-size:9px;margin:9px 0 0}.workforce-summary,.variance-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:12px}.summary-card{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:16px}.summary-card span{display:block;color:var(--muted);font-size:10px}.summary-card strong{display:block;margin-top:9px;font-size:22px}.summary-card small{display:block;color:var(--muted);font-size:9px;margin-top:5px}.table-panel{padding:0;overflow:hidden}.table-toolbar{padding:16px 18px;border-bottom:1px solid var(--line)}.table-toolbar>div{display:grid;gap:3px}.table-toolbar strong{font-size:12px}.table-toolbar span{font-size:9px;color:var(--muted)}.table-toolbar input{width:245px;padding:8px 10px;font-size:10px}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:780px}th,td{padding:14px 18px;text-align:left;border-bottom:1px solid var(--line);font-size:10px}th{color:var(--muted);font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:8px;background:color-mix(in srgb,var(--panel2) 55%,transparent)}tbody tr:hover{background:color-mix(in srgb,var(--panel2) 65%,transparent)}td strong{display:block;font-size:11px}td small{color:var(--muted)}.tag{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:4px 7px;font-size:8px}.tag.high{border-color:color-mix(in srgb,var(--orange) 40%,var(--line));color:var(--orange)}.tag.approved{border-color:color-mix(in srgb,var(--mint) 35%,var(--line));color:var(--mint)}.row-action{border:0;background:transparent;color:var(--muted);cursor:pointer}.variance-layout{display:grid;grid-template-columns:1.4fr .7fr;gap:12px}.variance-chart-panel,.driver-panel{min-height:390px}.variance-chart-panel canvas{height:300px;margin-top:20px}.period-badge{font-size:9px;border:1px solid var(--line);padding:5px 7px;border-radius:6px;color:var(--muted)}.driver-item{padding:14px 0;border-bottom:1px solid var(--line)}.driver-item span{font-size:9px;font-weight:750;letter-spacing:.07em}.driver-item p{font-size:11px;color:var(--muted);margin:5px 0}.driver-item small{font-size:8px;color:var(--blue)}.driver-panel .ai-action{width:100%;margin-top:16px}.variance-table{margin-top:12px}.memo-layout{display:grid;grid-template-columns:1fr 300px;gap:12px}.memo-document{padding:36px 44px;min-height:650px}.memo-cover{padding-bottom:25px;border-bottom:1px solid var(--line)}.memo-cover h2{font-size:28px;margin-top:10px}.memo-cover>p{color:var(--muted);font-size:11px}.memo-meta{display:flex;gap:22px;margin-top:18px}.memo-meta div{display:grid;gap:3px}.memo-meta span{color:var(--muted);font-size:8px;text-transform:uppercase;letter-spacing:.1em}.memo-meta strong{font-size:10px}.decision-badge{display:inline-block;margin-top:24px;padding:6px 8px;border-radius:6px;font-size:9px;font-weight:750;background:color-mix(in srgb,var(--orange) 12%,transparent);color:var(--orange);border:1px solid color-mix(in srgb,var(--orange) 35%,var(--line))}.memo-section{margin-top:26px}.memo-section h3{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}.memo-section p,.memo-section li{font-size:12px;color:color-mix(in srgb,var(--text) 82%,var(--muted));line-height:1.65}.evidence-list{padding:0;list-style:none}.evidence-list li{padding:9px 11px;background:var(--panel2);border-radius:8px;margin-top:7px;font-size:10px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.memo-actions{display:flex;gap:8px;margin-top:28px}.memo-history{align-self:start}.memo-history>h2{margin-bottom:18px}.memo-history-item{display:grid;gap:5px;width:100%;text-align:left;border:0;border-top:1px solid var(--line);background:transparent;padding:14px 4px;cursor:pointer}.memo-history-item strong{font-size:11px}.memo-history-item span{font-size:9px;color:var(--muted)}.memo-history-item.active strong{color:var(--mint)}.ai-drawer{position:fixed;top:0;right:0;width:min(430px,100vw);height:100vh;background:var(--panel);border-left:1px solid var(--line);z-index:51;box-shadow:var(--shadow);transform:translateX(105%);transition:.28s ease;display:flex;flex-direction:column}.ai-drawer.open{transform:translateX(0)}.drawer-head{display:flex;justify-content:space-between;align-items:center;padding:18px;border-bottom:1px solid var(--line)}.drawer-head>div{display:flex;align-items:center;gap:10px}.drawer-head div div{display:grid;gap:2px}.drawer-head div span{font-size:9px;color:var(--muted)}.drawer-head button{border:0;background:transparent;font-size:24px;color:var(--muted);cursor:pointer}.drawer-body{padding:20px;overflow:auto;flex:1}.ai-message,.user-message{padding:14px;border-radius:12px;background:var(--panel2);margin-bottom:12px}.user-message{margin-left:48px;background:color-mix(in srgb,var(--blue) 14%,var(--panel2))}.ai-message>span{font-size:8px;color:var(--mint);letter-spacing:.12em}.ai-message p,.user-message p{font-size:11px;margin:6px 0;color:color-mix(in srgb,var(--text) 84%,var(--muted))}.ai-message ul{padding-left:18px;font-size:10px;color:var(--muted)}.suggested-prompts{padding:8px 18px;display:flex;flex-wrap:wrap;gap:5px}.suggested-prompts button{font-size:8px;border:1px solid var(--line);background:var(--panel2);color:var(--muted);border-radius:99px;padding:6px 8px;cursor:pointer}.ai-input{display:grid;grid-template-columns:1fr 40px;gap:7px;padding:15px 18px;border-top:1px solid var(--line)}.ai-input button{border:0;background:var(--mint);color:#11180d;border-radius:9px;font-weight:800;cursor:pointer}.drawer-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(2px);z-index:50;opacity:0;pointer-events:none;transition:.25s}.drawer-backdrop.open{opacity:1;pointer-events:auto}.toast-region{position:fixed;right:18px;bottom:18px;z-index:60;display:grid;gap:8px}.toast{background:var(--text);color:var(--bg);border-radius:10px;padding:11px 14px;font-size:10px;box-shadow:var(--shadow);animation:toastIn .25s ease}@keyframes toastIn{from{transform:translateY(12px);opacity:0}}@media(max-width:1100px){body{grid-template-columns:80px 1fr}.sidebar{padding:24px 12px}.brand>span:not(.brand-mark),.beta,.nav-item:not(.active)::after,.nav-item{font-size:0}.nav-item span{font-size:9px;margin:0}.nav-item{text-align:center}.sidebar-context,.sidebar-foot div{display:none}.sidebar-foot{justify-content:center}.workspace-grid,.variance-layout{grid-template-columns:1fr}.ai-brief-panel{min-height:320px}.scenario-layout{grid-template-columns:260px 1fr}.comparison-grid{grid-template-columns:repeat(2,1fr)}.natural-language-panel{grid-template-columns:1fr}.prompt-row,.prompt-chips,.prompt-status{grid-column:1}.memo-layout{grid-template-columns:1fr}.memo-history{display:none}}@media(max-width:760px){body{display:block}.sidebar{position:sticky;height:auto;padding:12px 14px;display:flex;flex-direction:row;align-items:center;border-right:0;border-bottom:1px solid var(--line)}.sidebar nav{display:flex;margin:0 0 0 auto}.nav-item{padding:9px}.sidebar-context,.sidebar-foot{display:none}main{padding:22px 15px}.topbar{align-items:flex-start}.topbar h1{font-size:28px}.header-actions .ghost,.header-actions .icon-button{display:none}.hero-grid,.workforce-summary,.variance-summary{grid-template-columns:repeat(2,1fr)}.lower-grid{grid-template-columns:1fr}.workspace-grid{grid-template-columns:1fr}.scenario-layout{grid-template-columns:1fr}.controls-panel{position:static}.comparison-grid{grid-template-columns:repeat(2,1fr)}.section-intro{align-items:flex-start;flex-direction:column}.memo-document{padding:24px 20px}.model-banner span:last-child{display:none}}@media(max-width:480px){.hero-grid,.workforce-summary,.variance-summary,.comparison-grid{grid-template-columns:1fr 1fr}.metric-card{min-height:115px;padding:15px}.metric-value{font-size:24px}.sidebar nav .nav-item:nth-child(n+4){display:none}.header-actions .primary{font-size:0}.header-actions .primary:after{content:"+";font-size:18px}.prompt-row{grid-template-columns:1fr}.prompt-row button{padding:10px}.memo-meta{flex-wrap:wrap}.ai-drawer{width:100%}}
+
+</style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-mark">R</span><span>RunwayOS</span><span class="beta">PORTFOLIO</span></div>
+    <nav aria-label="Primary navigation">
+      <button class="nav-item active" data-view="overview"><span>01</span>Command center</button>
+      <button class="nav-item" data-view="scenarios"><span>02</span>Scenario lab</button>
+      <button class="nav-item" data-view="workforce"><span>03</span>Workforce plan</button>
+      <button class="nav-item" data-view="variance"><span>04</span>Variance review</button>
+      <button class="nav-item" data-view="memos"><span>05</span>Decision memos</button>
+    </nav>
+    <div class="sidebar-context"><p class="eyebrow">ACTIVE MODEL</p><strong>NexaFlow FY2026</strong><span>USD · Monthly · v3.2</span></div>
+    <div class="sidebar-foot"><span class="status-dot"></span><div><strong>Model reconciled</strong><span>12 checks passed</span></div></div>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <div><p class="eyebrow" id="view-eyebrow">NEXAFLOW · FY2026 PLAN</p><h1 id="view-title">FP&A decision studio</h1></div>
+      <div class="header-actions"><button class="icon-button" id="theme-toggle" aria-label="Toggle color theme">◐</button><button class="ghost" id="export-view">Export view</button><button class="primary" data-view-jump="scenarios">New scenario</button></div>
+    </header>
+
+    <section class="app-view active" id="overview-view">
+      <div class="model-banner"><div><span class="live-pill">LIVE</span><strong>Approved baseline</strong><span>Updated with September actuals</span></div><button class="text-button" data-view-jump="variance">Review close →</button></div>
+      <section class="hero-grid" id="metric-grid"></section>
+      <section class="workspace-grid">
+        <article class="panel cash-panel"><div class="panel-head"><div><p class="eyebrow">FORWARD VIEW</p><h2>Cash position & runway</h2></div><div class="legend"><span class="base"></span>Baseline <span class="scenario"></span>Working scenario</div></div><canvas id="cash-chart" aria-label="Monthly cash position forecast"></canvas><div class="chart-foot"><span>Minimum cash guardrail <strong>$750K</strong></span><button class="text-button" data-view-jump="scenarios">Open scenario lab →</button></div></article>
+        <article class="panel ai-brief-panel"><div class="ai-kicker"><span class="ai-orb">✦</span><span>FINANCE AI BRIEF</span><span class="verified">GROUNDED</span></div><h2 id="brief-headline">The approved plan preserves financial flexibility.</h2><p id="brief-copy">Runway remains above the 12-month guardrail while the five approved hires become active in April.</p><div class="brief-evidence"><div><span>Primary risk</span><strong>Payroll begins ahead of ARR conversion</strong></div><div><span>Recommended checkpoint</span><strong>June board review</strong></div></div><button class="ai-action" id="open-ai">Ask finance AI</button></article>
+      </section>
+      <section class="lower-grid"><article class="panel compact-panel"><div class="panel-head"><div><p class="eyebrow">PLAN HEALTH</p><h2>Management guardrails</h2></div><span class="score">82 / 100</span></div><div id="guardrails"></div></article><article class="panel compact-panel"><div class="panel-head"><div><p class="eyebrow">MONTHLY BRIDGE</p><h2>September EBITDA variance</h2></div><button class="text-button" data-view-jump="variance">Details →</button></div><div id="variance-mini"></div></article></section>
+    </section>
+
+    <section class="app-view" id="scenarios-view">
+      <div class="section-intro"><div><p class="eyebrow">NON-DESTRUCTIVE PLANNING</p><h2>Model the decision before you commit.</h2><p>Change commercial and workforce assumptions. The approved baseline stays untouched until you explicitly promote a scenario.</p></div><div class="scenario-state"><span class="status-dot"></span>Unsaved working scenario</div></div>
+      <div class="scenario-layout">
+        <aside class="panel controls-panel"><div class="control-head"><h2>Scenario assumptions</h2><button class="text-button" id="reset-scenario">Reset</button></div><label>Additional hires <output id="hires-output">5</output></label><input id="hires" type="range" min="0" max="15" value="5" /><label>Average salary <output id="salary-output">$116K</output></label><input id="salary" type="range" min="70000" max="180000" step="1000" value="116000" /><label>Monthly revenue growth <output id="growth-output">4.2%</output></label><input id="growth" type="range" min="0" max="8" step="0.1" value="4.2" /><label>Monthly churn <output id="churn-output">2.1%</output></label><input id="churn" type="range" min="0.5" max="7" step="0.1" value="2.1" /><label>Hiring starts <output id="start-output">April</output></label><input id="start-month" type="range" min="0" max="11" value="3" /><button class="ai-action" id="analyze-scenario">Analyze scenario</button></aside>
+        <div class="scenario-results"><div class="comparison-grid" id="comparison-grid"></div><article class="panel scenario-chart-panel"><div class="panel-head"><div><p class="eyebrow">CASH CURVE</p><h2>Baseline vs working scenario</h2></div><div class="legend"><span class="base"></span>Baseline <span class="scenario"></span>Scenario</div></div><canvas id="scenario-chart" aria-label="Scenario cash comparison"></canvas></article><article class="panel natural-language-panel"><div><p class="eyebrow">AI SCENARIO BUILDER</p><h2>Describe the decision in plain English</h2></div><div class="prompt-row"><input id="scenario-prompt" aria-label="Scenario request" value="Hire 8 people and delay hiring by 2 months with churn at 3.5%"/><button id="run-prompt">Build scenario</button></div><div class="prompt-chips"><button>Hire 10 people</button><button>Set churn to 4%</button><button>Delay hiring by 3 months</button></div><p class="prompt-status" id="prompt-status">The engine converts supported language into governed assumptions—never directly into financial outputs.</p></article></div>
+      </div>
+    </section>
+
+    <section class="app-view" id="workforce-view">
+      <div class="section-intro"><div><p class="eyebrow">WORKFORCE PLANNING</p><h2>Every hire has a cash consequence.</h2><p>Review approved roles, timing and fully loaded costs before they enter the forecast.</p></div><button class="primary" id="add-role">Add planned role</button></div><section class="workforce-summary" id="workforce-summary"></section><article class="panel table-panel"><div class="table-toolbar"><div><strong>FY2026 hiring plan</strong><span id="role-count">5 planned roles</span></div><input id="role-search" placeholder="Search roles or departments" aria-label="Search workforce plan" /></div><div class="table-wrap"><table><thead><tr><th>Role</th><th>Department</th><th>Start</th><th>Fully loaded cost</th><th>Priority</th><th>Status</th><th></th></tr></thead><tbody id="workforce-body"></tbody></table></div></article>
+    </section>
+
+    <section class="app-view" id="variance-view">
+      <div class="section-intro"><div><p class="eyebrow">SEPTEMBER CLOSE</p><h2>Explain performance, not just the difference.</h2><p>Every material variance includes favorability, a deterministic driver and an accountable narrative.</p></div><button class="ghost" id="download-variance">Download variance pack</button></div><section class="variance-summary" id="variance-summary"></section><div class="variance-layout"><article class="panel variance-chart-panel"><div class="panel-head"><div><p class="eyebrow">EBITDA BRIDGE</p><h2>Budget to actual</h2></div><span class="period-badge">SEP 2026</span></div><canvas id="variance-chart" aria-label="EBITDA variance waterfall"></canvas></article><article class="panel driver-panel"><p class="eyebrow">AI DRAFT COMMENTARY</p><h2>What changed?</h2><div id="commentary-list"></div><button class="ai-action" id="generate-memo">Create management memo</button></article></div><article class="panel table-panel variance-table"><div class="table-toolbar"><div><strong>Material account variances</strong><span>Threshold: ±$5K</span></div><button class="text-button">Change threshold</button></div><div class="table-wrap"><table><thead><tr><th>Account</th><th>Budget</th><th>Actual</th><th>Variance</th><th>Favorability</th><th>Driver</th></tr></thead><tbody id="variance-body"></tbody></table></div></article>
+    </section>
+
+    <section class="app-view" id="memos-view">
+      <div class="section-intro"><div><p class="eyebrow">DECISION MEMORY</p><h2>Auditable recommendations, ready for leadership.</h2><p>Each memo preserves the assumptions, model version and evidence used at the time of decision.</p></div><button class="primary" id="new-memo">Generate from scenario</button></div><div class="memo-layout"><article class="panel memo-document" id="memo-document"></article><aside class="panel memo-history"><p class="eyebrow">MEMO HISTORY</p><h2>Previous decisions</h2><button class="memo-history-item active"><strong>Hiring affordability review</strong><span>Today · v3.2</span></button><button class="memo-history-item"><strong>Q4 growth downside</strong><span>Sep 18 · v3.1</span></button><button class="memo-history-item"><strong>Vendor consolidation</strong><span>Aug 30 · v2.9</span></button></aside></div>
+    </section>
+  </main>
+
+  <aside class="ai-drawer" id="ai-drawer" aria-hidden="true"><div class="drawer-head"><div><span class="ai-orb">✦</span><div><strong>Finance AI</strong><span>Model-grounded decision partner</span></div></div><button id="close-ai" aria-label="Close finance AI">×</button></div><div class="drawer-body" id="ai-conversation"><div class="ai-message"><span>FINANCE AI</span><p>Ask about runway, hiring affordability, churn or the current variance review. I calculate through the governed model and cite every financial conclusion.</p></div></div><div class="suggested-prompts"><button>Can we afford 8 hires?</button><button>What is the biggest runway risk?</button><button>Explain September variance</button></div><form class="ai-input" id="ai-form"><input id="ai-query" placeholder="Ask a finance decision question…" aria-label="Ask finance AI"/><button>↑</button></form></aside>
+  <div class="drawer-backdrop" id="drawer-backdrop"></div><div class="toast-region" id="toast-region" aria-live="polite"></div>
+  <script>
+const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+const baseline = Object.freeze({
+  openingCash: 5200000,
+  startingMrr: 486000,
+  monthlyGrowth: 0.042,
+  monthlyChurn: 0.021,
+  grossMargin: 0.81,
+  startingHeadcount: 42,
+  averageSalary: 116000,
+  benefitsRate: 0.22,
+  plannedHires: 5,
+  hireStartMonth: 3,
+  nonPayrollOpex: 238000,
+  annualInflation: 0.06,
+  fundingAmount: 0,
+  fundingMonth: 12,
+  minimumCash: 750000
+});
+
+const round = value => Math.round(value);
+
+function calculatePlan(overrides = {}) {
+  const a = { ...baseline, ...overrides };
+  const rows = [];
+  let cash = a.openingCash;
+  let mrr = a.startingMrr;
+  let cumulativeBurn = 0;
+
+  months.forEach((month, index) => {
+    const growthMrr = round(mrr * a.monthlyGrowth);
+    const churnMrr = round(mrr * a.monthlyChurn);
+    mrr += growthMrr - churnMrr;
+    const revenue = mrr;
+    const cogs = round(revenue * (1 - a.grossMargin));
+    const hiresActive = index >= a.hireStartMonth ? a.plannedHires : 0;
+    const headcount = a.startingHeadcount + hiresActive;
+    const payroll = round(headcount * a.averageSalary * (1 + a.benefitsRate) / 12);
+    const opex = round(a.nonPayrollOpex * Math.pow(1 + a.annualInflation, index / 12));
+    const ebitda = revenue - cogs - payroll - opex;
+    const funding = index === a.fundingMonth ? a.fundingAmount : 0;
+    const cashMovement = ebitda + funding;
+    cash = round(cash) + round(cashMovement);
+    if (cashMovement < 0) cumulativeBurn += Math.abs(cashMovement);
+    rows.push({ month, index, revenue, cogs, grossProfit: revenue-cogs, payroll, opex, ebitda, cashMovement: round(cashMovement), cash, headcount, hiresActive, growthMrr, churnMrr });
+  });
+
+  const negativeMonths = rows.filter(row => row.cashMovement < 0);
+  const averageBurn = negativeMonths.length ? negativeMonths.reduce((sum,row)=>sum+Math.abs(row.cashMovement),0)/negativeMonths.length : 0;
+  const runway = averageBurn > 0 ? rows[0].cash / averageBurn : 99;
+  return {
+    assumptions: a,
+    rows,
+    metrics: {
+      endingCash: rows.at(-1).cash,
+      averageBurn: round(averageBurn),
+      runway: Math.min(99, Math.round(runway * 10) / 10),
+      endingMrr: rows.at(-1).revenue,
+      arr: rows.at(-1).revenue * 12,
+      endingHeadcount: rows.at(-1).headcount,
+      annualRevenue: rows.reduce((sum,row)=>sum+row.revenue,0),
+      annualEbitda: rows.reduce((sum,row)=>sum+row.ebitda,0),
+      grossMargin: a.grossMargin
+    }
+  };
+}
+
+function comparePlans(base, scenario) {
+  return {
+    runway: scenario.metrics.runway - base.metrics.runway,
+    endingCash: scenario.metrics.endingCash - base.metrics.endingCash,
+    annualRevenue: scenario.metrics.annualRevenue - base.metrics.annualRevenue,
+    annualEbitda: scenario.metrics.annualEbitda - base.metrics.annualEbitda,
+    headcount: scenario.metrics.endingHeadcount - base.metrics.endingHeadcount
+  };
+}
+
+function calculateVariance(actual, budget, type = "expense") {
+  const delta = actual - budget;
+  const percent = budget === 0 ? 0 : delta / Math.abs(budget);
+  const favorable = type === "revenue" ? delta >= 0 : delta <= 0;
+  return { delta, percent, favorable, status: favorable ? "Favorable" : "Unfavorable" };
+}
+
+const varianceRows = [
+  { account: "Subscription revenue", category: "Revenue", budget: 548000, actual: 526000, driver: "Enterprise renewal slipped", type: "revenue" },
+  { account: "Services revenue", category: "Revenue", budget: 76000, actual: 83000, driver: "Two implementations accelerated", type: "revenue" },
+  { account: "Payroll & benefits", category: "People", budget: 488000, actual: 512000, driver: "Sales hires started early", type: "expense" },
+  { account: "Cloud infrastructure", category: "COGS", budget: 94000, actual: 101000, driver: "Usage grew ahead of plan", type: "expense" },
+  { account: "Demand generation", category: "Sales & marketing", budget: 122000, actual: 108000, driver: "Campaign shifted to Q4", type: "expense" },
+  { account: "Software & vendors", category: "G&A", budget: 47000, actual: 53000, driver: "Annual contract true-up", type: "expense" }
+].map(row => ({ ...row, ...calculateVariance(row.actual,row.budget,row.type) }));
+
+function buildRecommendation(base, scenario, label = "Proposed hiring plan") {
+  const delta = comparePlans(base, scenario);
+  const runwayRisk = scenario.metrics.runway < 12;
+  const cashRisk = scenario.metrics.endingCash < scenario.assumptions.minimumCash;
+  const decision = runwayRisk || cashRisk ? "Revise before approval" : "Financially supportable";
+  const action = runwayRisk
+    ? "Phase the hires across two quarters or defer lower-priority roles until recurring revenue catches up."
+    : "Approve with a monthly runway checkpoint and retain the minimum-cash guardrail.";
+  return {
+    decision,
+    tone: runwayRisk || cashRisk ? "risk" : "positive",
+    headline: runwayRisk ? "The plan breaks the 12-month runway guardrail." : "The plan stays inside the runway guardrail.",
+    summary: `${label} changes projected runway by ${delta.runway.toFixed(1)} months and ending cash by ${formatCurrency(delta.endingCash)} versus the approved baseline.`,
+    action,
+    evidence: [
+      `Runway: ${scenario.metrics.runway.toFixed(1)} months [MODEL-RUNWAY-01]`,
+      `Ending cash: ${formatCurrency(scenario.metrics.endingCash)} [MODEL-CASH-12]`,
+      `Annual EBITDA impact: ${formatCurrency(delta.annualEbitda)} [MODEL-PL-12]`
+    ]
+  };
+}
+
+function formatCurrency(value, compact = true) {
+  const sign = value < 0 ? "−" : "";
+  const n = Math.abs(value);
+  if (compact && n >= 1000000) return `${sign}$${(n/1000000).toFixed(2)}M`;
+  if (compact && n >= 1000) return `${sign}$${Math.round(n/1000)}K`;
+  return `${sign}$${Math.round(n).toLocaleString()}`;
+}
+
+function parseScenarioPrompt(prompt) {
+  const text = prompt.toLowerCase();
+  const overrides = {};
+  let label = "AI-created scenario";
+  const hireMatch = text.match(/(?:hire|add)\s+(\d+)/);
+  const churnMatch = text.match(/churn(?:\s+(?:to|at))?\s+(\d+(?:\.\d+)?)\s*%/);
+  const growthMatch = text.match(/(?:growth|revenue growth)(?:\s+(?:to|at))?\s+(\d+(?:\.\d+)?)\s*%/);
+  const delayMatch = text.match(/delay(?:\s+(?:hiring|hires))?(?:\s+by)?\s+(\d+)\s+month/);
+  if (hireMatch) { overrides.plannedHires = Number(hireMatch[1]); label = `Hire ${hireMatch[1]} people`; }
+  if (churnMatch) { overrides.monthlyChurn = Number(churnMatch[1]) / 100; label += ` · ${churnMatch[1]}% churn`; }
+  if (growthMatch) { overrides.monthlyGrowth = Number(growthMatch[1]) / 100; label += ` · ${growthMatch[1]}% growth`; }
+  if (delayMatch) { overrides.hireStartMonth = Math.min(11, baseline.hireStartMonth + Number(delayMatch[1])); label += ` · delay ${delayMatch[1]} months`; }
+  return { overrides, label, understood: Object.keys(overrides).length > 0 };
+}
+
+
+
+const $ = selector => document.querySelector(selector);
+const $$ = selector => [...document.querySelectorAll(selector)];
+const basePlan = calculatePlan();
+let scenarioPlan = calculatePlan();
+let currentView = "overview";
+let lastRecommendation = buildRecommendation(basePlan, scenarioPlan, "Approved hiring plan");
+
+const roles = [
+  { role:"Enterprise Account Executive", dept:"Sales", start:"Apr", cost:174000, priority:"High", status:"Approved" },
+  { role:"Senior Product Engineer", dept:"Product", start:"Apr", cost:201000, priority:"High", status:"Approved" },
+  { role:"Customer Success Manager", dept:"Customer", start:"May", cost:132000, priority:"Medium", status:"Approved" },
+  { role:"Demand Generation Manager", dept:"Marketing", start:"Jun", cost:146000, priority:"Medium", status:"Pending" },
+  { role:"FP&A Analyst", dept:"Finance", start:"Jul", cost:128000, priority:"High", status:"Pending" }
+];
+
+const viewMeta = {
+  overview:["NEXAFLOW · FY2026 PLAN","FP&A decision studio"],
+  scenarios:["DRIVER-BASED PLANNING","Scenario lab"],
+  workforce:["PEOPLE COSTS · FY2026","Workforce plan"],
+  variance:["ACTUALS VS BUDGET","Variance review"],
+  memos:["GOVERNED OUTPUTS","Decision memos"]
+};
+
+function escapeHtml(value){return String(value).replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));}
+
+function toast(message){const el=document.createElement("div");el.className="toast";el.textContent=message;$("#toast-region").append(el);setTimeout(()=>el.remove(),2800);}
+
+function showView(name){
+  currentView=name;
+  $$(".app-view").forEach(view=>view.classList.toggle("active",view.id===`${name}-view`));
+  $$(".nav-item").forEach(item=>item.classList.toggle("active",item.dataset.view===name));
+  $("#view-eyebrow").textContent=viewMeta[name][0];$("#view-title").textContent=viewMeta[name][1];
+  window.scrollTo({top:0,behavior:"smooth"});requestAnimationFrame(drawAllCharts);
+}
+
+function metricCard(label,value,note,kind="",tag="PLAN"){
+  return `<article class="metric-card ${kind}"><div class="metric-label">${label}<span>${tag}</span></div><div class="metric-value">${value}</div><div class="metric-note ${kind==="featured"?"positive":kind}">${note}</div></article>`;
+}
+
+function renderOverview(){
+  const m=basePlan.metrics;
+  $("#metric-grid").innerHTML=[
+    metricCard("Cash runway",`${m.runway.toFixed(1)} <small>months</small>`,`Above 12-month guardrail`,"featured","GUARDRAIL"),
+    metricCard("Ending cash",formatCurrency(m.endingCash),"December 2026 · baseline","","FORECAST"),
+    metricCard("Annual recurring revenue",formatCurrency(m.arr),"4.2% gross adds · 2.1% churn","positive","ARR"),
+    metricCard("Approved headcount",m.endingHeadcount,"5 roles enter plan","","PEOPLE")
+  ].join("");
+  const guardrails=[
+    ["Runway protection",Math.min(100,m.runway/15*100),`${m.runway.toFixed(1)} mo`],
+    ["Gross margin",m.grossMargin*100,`${(m.grossMargin*100).toFixed(0)}%`],
+    ["Minimum cash",Math.min(100,m.endingCash/2500000*100),formatCurrency(m.endingCash)],
+    ["Forecast confidence",88,"88%"]
+  ];
+  $("#guardrails").innerHTML=guardrails.map(([label,pct,value])=>`<div class="guardrail-row"><span>${label}</span><div class="progress"><i style="width:${pct}%"></i></div><strong>${value}</strong></div>`).join("");
+  const mini=varianceRows.slice(0,4);
+  const max=Math.max(...mini.map(row=>Math.abs(row.delta)));
+  $("#variance-mini").innerHTML=mini.map(row=>`<div class="mini-variance-row ${row.favorable?"positive-row":""}"><span>${row.account}</span><div class="mini-bar"><i style="width:${Math.abs(row.delta)/max*100}%"></i></div><strong class="${row.favorable?"positive":"negative"}">${formatCurrency(row.delta)}</strong></div>`).join("");
+}
+
+function readScenarioControls(){
+  return {plannedHires:Number($("#hires").value),averageSalary:Number($("#salary").value),monthlyGrowth:Number($("#growth").value)/100,monthlyChurn:Number($("#churn").value)/100,hireStartMonth:Number($("#start-month").value)};
+}
+
+function setScenarioControls(values){
+  if(values.plannedHires!=null)$("#hires").value=values.plannedHires;
+  if(values.averageSalary!=null)$("#salary").value=values.averageSalary;
+  if(values.monthlyGrowth!=null)$("#growth").value=values.monthlyGrowth*100;
+  if(values.monthlyChurn!=null)$("#churn").value=values.monthlyChurn*100;
+  if(values.hireStartMonth!=null)$("#start-month").value=values.hireStartMonth;
+  updateScenario();
+}
+
+function updateScenario(){
+  const values=readScenarioControls();scenarioPlan=calculatePlan(values);lastRecommendation=buildRecommendation(basePlan,scenarioPlan,"Working hiring scenario");
+  $("#hires-output").value=values.plannedHires;$("#salary-output").value=`$${Math.round(values.averageSalary/1000)}K`;$("#growth-output").value=`${(values.monthlyGrowth*100).toFixed(1)}%`;$("#churn-output").value=`${(values.monthlyChurn*100).toFixed(1)}%`;$("#start-output").value=months[values.hireStartMonth];
+  const delta=comparePlans(basePlan,scenarioPlan);
+  const cards=[
+    ["Runway",`${scenarioPlan.metrics.runway.toFixed(1)} mo`,`${delta.runway>=0?"+":""}${delta.runway.toFixed(1)} months`,delta.runway],
+    ["Ending cash",formatCurrency(scenarioPlan.metrics.endingCash),formatCurrency(delta.endingCash),delta.endingCash],
+    ["FY EBITDA",formatCurrency(scenarioPlan.metrics.annualEbitda),formatCurrency(delta.annualEbitda),delta.annualEbitda],
+    ["Headcount",scenarioPlan.metrics.endingHeadcount,`${delta.headcount>=0?"+":""}${delta.headcount} vs plan`,delta.headcount===0?1:-delta.headcount]
+  ];
+  $("#comparison-grid").innerHTML=cards.map(([label,value,note,signal])=>`<article class="comparison-card"><span>${label}</span><strong>${value}</strong><small class="${signal>=0?"positive":"negative"}">${note}</small></article>`).join("");
+  requestAnimationFrame(drawAllCharts);
+}
+
+function chartColors(){const s=getComputedStyle(document.documentElement);return{line:s.getPropertyValue("--line").trim(),muted:s.getPropertyValue("--muted").trim(),blue:s.getPropertyValue("--blue").trim(),mint:s.getPropertyValue("--mint").trim(),orange:s.getPropertyValue("--orange").trim(),text:s.getPropertyValue("--text").trim()};}
+
+function setupCanvas(canvas,height){
+  if(!canvas||canvas.offsetParent===null)return null;const rect=canvas.getBoundingClientRect();if(!rect.width)return null;const dpr=window.devicePixelRatio||1;canvas.width=rect.width*dpr;canvas.height=height*dpr;canvas.style.height=`${height}px`;const ctx=canvas.getContext("2d");ctx.setTransform(dpr,0,0,dpr,0,0);return{ctx,w:rect.width,h:height};
+}
+
+function drawLineChart(canvas,series,height=280){
+  const setup=setupCanvas(canvas,height);if(!setup)return;const{ctx,w,h}=setup,c=chartColors(),pad={l:38,r:20,t:15,b:28};const all=series.flatMap(s=>s.values);const min=Math.min(...all,0)*.92,max=Math.max(...all)*1.04,plotW=w-pad.l-pad.r,plotH=h-pad.t-pad.b;
+  ctx.font="9px system-ui";ctx.fillStyle=c.muted;ctx.strokeStyle=c.line;ctx.lineWidth=1;
+  for(let i=0;i<5;i++){const y=pad.t+i*plotH/4;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();const val=max-(max-min)*i/4;ctx.fillText(formatCurrency(val),0,y+3);}
+  months.forEach((m,i)=>{if(i%2===0||w>700){const x=pad.l+i*plotW/11;ctx.fillText(m,x-7,h-7);}});
+  series.forEach(s=>{ctx.strokeStyle=s.color;ctx.lineWidth=s.width||2.4;ctx.beginPath();s.values.forEach((v,i)=>{const x=pad.l+i*plotW/11,y=pad.t+(max-v)/(max-min)*plotH;i?ctx.lineTo(x,y):ctx.moveTo(x,y);});ctx.stroke();});
+  const threshold=750000,y=pad.t+(max-threshold)/(max-min)*plotH;if(y>pad.t&&y<h-pad.b){ctx.save();ctx.setLineDash([4,5]);ctx.strokeStyle=c.orange;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();ctx.restore();}
+}
+
+function drawVarianceChart(){
+  const canvas=$("#variance-chart"),setup=setupCanvas(canvas,300);if(!setup)return;const{ctx,w,h}=setup,c=chartColors(),pad=32;const values=[62000,-22000,7000,-24000,-7000,14000,-6000,24000];const labels=["Budget","Sub rev","Services","Payroll","Cloud","Marketing","Vendors","Actual"];const max=90000,min=-20000,barW=Math.min(54,(w-pad*2)/values.length*.58),gap=(w-pad*2)/values.length;
+  ctx.font="9px system-ui";ctx.textAlign="center";values.forEach((v,i)=>{const x=pad+i*gap+gap/2;const zero=h-52;const bh=Math.abs(v)/(max-min)*(h-90);const y=v>=0?zero-bh:zero;ctx.fillStyle=i===0||i===values.length-1?c.blue:v>=0?c.mint:c.orange;ctx.fillRect(x-barW/2,y,barW,bh);ctx.fillStyle=c.muted;ctx.fillText(labels[i],x,h-28);ctx.fillStyle=c.text;ctx.fillText(formatCurrency(v),x,v>=0?y-7:y+bh+13);});ctx.strokeStyle=c.line;ctx.beginPath();ctx.moveTo(pad,h-52);ctx.lineTo(w-pad,h-52);ctx.stroke();
+}
+
+function drawAllCharts(){
+  const c=chartColors();drawLineChart($("#cash-chart"),[{values:basePlan.rows.map(r=>r.cash),color:c.blue},{values:scenarioPlan.rows.map(r=>r.cash),color:c.mint}],285);drawLineChart($("#scenario-chart"),[{values:basePlan.rows.map(r=>r.cash),color:c.blue},{values:scenarioPlan.rows.map(r=>r.cash),color:c.mint}],270);drawVarianceChart();
+}
+
+function renderWorkforce(filter=""){
+  const shown=roles.filter(role=>`${role.role} ${role.dept}`.toLowerCase().includes(filter.toLowerCase()));const total=roles.reduce((sum,r)=>sum+r.cost,0),approved=roles.filter(r=>r.status==="Approved").reduce((sum,r)=>sum+r.cost,0);
+  $("#workforce-summary").innerHTML=[
+    ["Planned roles",roles.length,"3 approved · 2 pending"],["Annualized investment",formatCurrency(total),"Fully loaded cost"],["Approved investment",formatCurrency(approved),"Enters current forecast"],["Runway impact","−3.3 mo","If all roles begin on plan"]
+  ].map(([l,v,n])=>`<article class="summary-card"><span>${l}</span><strong>${v}</strong><small>${n}</small></article>`).join("");
+  $("#role-count").textContent=`${roles.length} planned roles`;
+  $("#workforce-body").innerHTML=shown.map((r,i)=>`<tr><td><strong>${escapeHtml(r.role)}</strong><small>HC-${String(i+1).padStart(3,"0")}</small></td><td>${r.dept}</td><td>${r.start} 2026</td><td>${formatCurrency(r.cost)}</td><td><span class="tag ${r.priority.toLowerCase()}">${r.priority}</span></td><td><span class="tag ${r.status.toLowerCase()}">${r.status}</span></td><td><button class="row-action" data-role-index="${i}" aria-label="Delay ${escapeHtml(r.role)}">•••</button></td></tr>`).join("")||`<tr><td colspan="7">No roles match this search.</td></tr>`;
+}
+
+function renderVariance(){
+  const revenueBudget=varianceRows.filter(r=>r.type==="revenue").reduce((s,r)=>s+r.budget,0),revenueActual=varianceRows.filter(r=>r.type==="revenue").reduce((s,r)=>s+r.actual,0),expenseDelta=varianceRows.filter(r=>r.type==="expense").reduce((s,r)=>s+r.delta,0);
+  $("#variance-summary").innerHTML=[["Revenue",formatCurrency(revenueActual),`${formatCurrency(revenueActual-revenueBudget)} vs budget`],["EBITDA",formatCurrency(24000),"−$38K vs budget"],["Gross margin","80.8%","−0.7 pts vs budget"],["Expense variance",formatCurrency(expenseDelta),"Net expense movement"]].map(([l,v,n],i)=>`<article class="summary-card"><span>${l}</span><strong>${v}</strong><small class="${i===0||i===1?"negative":""}">${n}</small></article>`).join("");
+  $("#variance-body").innerHTML=varianceRows.map(r=>`<tr><td><strong>${r.account}</strong><small>${r.category}</small></td><td>${formatCurrency(r.budget)}</td><td>${formatCurrency(r.actual)}</td><td class="${r.favorable?"positive":"negative"}">${formatCurrency(r.delta)}</td><td><span class="tag ${r.favorable?"approved":"high"}">${r.status}</span></td><td>${r.driver}</td></tr>`).join("");
+  $("#commentary-list").innerHTML=varianceRows.filter(r=>Math.abs(r.delta)>=7000).slice(0,4).map(r=>`<div class="driver-item"><span class="${r.favorable?"positive":"negative"}">${formatCurrency(r.delta)} · ${r.status.toUpperCase()}</span><p>${r.driver}. ${r.account} closed ${Math.abs(r.percent*100).toFixed(1)}% ${r.actual>r.budget?"above":"below"} budget.</p><small>[VAR-${r.account.replace(/\W/g,"").slice(0,8).toUpperCase()}]</small></div>`).join("");
+}
+
+function renderMemo(){
+  const r=lastRecommendation,d=comparePlans(basePlan,scenarioPlan);
+  $("#memo-document").innerHTML=`<div class="memo-cover"><p class="eyebrow">NEXAFLOW · FINANCE DECISION MEMO</p><h2>Hiring affordability review</h2><p>Assessment of the working workforce plan against FY2026 liquidity guardrails.</p><div class="memo-meta"><div><span>Prepared for</span><strong>Executive leadership</strong></div><div><span>Model version</span><strong>FY2026 v3.2</strong></div><div><span>Evidence timestamp</span><strong>25 Aug 2026</strong></div></div><span class="decision-badge">${r.decision.toUpperCase()}</span></div><section class="memo-section"><h3>Executive conclusion</h3><p><strong>${r.headline}</strong> ${r.summary}</p></section><section class="memo-section"><h3>Recommended action</h3><p>${r.action}</p></section><section class="memo-section"><h3>Decision economics</h3><p>The working plan changes annual EBITDA by <strong>${formatCurrency(d.annualEbitda)}</strong>, ending cash by <strong>${formatCurrency(d.endingCash)}</strong>, and year-end headcount by <strong>${d.headcount>=0?"+":""}${d.headcount}</strong> relative to baseline.</p></section><section class="memo-section"><h3>Evidence used</h3><ul class="evidence-list">${r.evidence.map(e=>`<li>${e}</li>`).join("")}</ul></section><div class="memo-actions"><button class="primary" id="download-memo">Download memo</button><button class="ghost" id="copy-memo">Copy summary</button></div>`;
+  $("#download-memo")?.addEventListener("click",()=>downloadText("nexaflow-hiring-decision-memo.txt",memoText()));$("#copy-memo")?.addEventListener("click",async()=>{await navigator.clipboard?.writeText(memoText());toast("Memo summary copied");});
+}
+
+function memoText(){return `NEXAFLOW — HIRING AFFORDABILITY REVIEW\nDecision: ${lastRecommendation.decision}\n\n${lastRecommendation.headline}\n${lastRecommendation.summary}\n\nRecommendation: ${lastRecommendation.action}\n\nEvidence:\n${lastRecommendation.evidence.join("\n")}`;}
+function downloadText(name,text){const blob=new Blob([text],{type:"text/plain"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name;a.click();URL.revokeObjectURL(url);toast(`${name} downloaded`);}
+
+function openAI(){$("#ai-drawer").classList.add("open");$("#drawer-backdrop").classList.add("open");$("#ai-drawer").setAttribute("aria-hidden","false");setTimeout(()=>$("#ai-query").focus(),250);}
+function closeAI(){$("#ai-drawer").classList.remove("open");$("#drawer-backdrop").classList.remove("open");$("#ai-drawer").setAttribute("aria-hidden","true");}
+
+function answerAI(question){
+  const q=question.toLowerCase();let answer,evidence;
+  if(q.includes("8")&&q.includes("hire")){const plan=calculatePlan({plannedHires:8});const r=buildRecommendation(basePlan,plan,"Eight-hire scenario");answer=`${r.headline} ${r.action}`;evidence=r.evidence;}
+  else if(q.includes("risk")){answer="The largest controllable runway risk is payroll timing: approved hiring cost enters before recurring-revenue growth fully compounds. A two-month hiring delay protects liquidity without reducing the approved role count.";evidence=[`Approved runway: ${basePlan.metrics.runway.toFixed(1)} months [MODEL-RUNWAY-01]`,`Planned hires: ${baseline.plannedHires} [ASSUMPTION-HC-01]`];}
+  else if(q.includes("variance")||q.includes("september")){answer="September EBITDA finished $38K below budget. The largest pressures were a delayed enterprise renewal and early sales hiring, partly offset by lower demand-generation spend and accelerated services revenue.";evidence=["Subscription revenue: −$22K [VAR-SUBSCRIP]","Payroll: +$24K unfavorable [VAR-PAYROLL]","Marketing: $14K favorable [VAR-DEMANDGE]"];}
+  else{answer=`The current working scenario produces ${scenarioPlan.metrics.runway.toFixed(1)} months of runway and ${formatCurrency(scenarioPlan.metrics.endingCash)} ending cash. ${lastRecommendation.action}`;evidence=lastRecommendation.evidence;}
+  const box=document.createElement("div");box.className="ai-message";box.innerHTML=`<span>FINANCE AI · VERIFIED MODEL</span><p>${escapeHtml(answer)}</p><ul>${evidence.map(e=>`<li>${escapeHtml(e)}</li>`).join("")}</ul>`;$("#ai-conversation").append(box);box.scrollIntoView({behavior:"smooth"});
+}
+
+function submitAI(question){if(!question.trim())return;const user=document.createElement("div");user.className="user-message";user.innerHTML=`<p>${escapeHtml(question)}</p>`;$("#ai-conversation").append(user);answerAI(question);}
+
+function buildPromptScenario(){
+  const parsed=parseScenarioPrompt($("#scenario-prompt").value);if(!parsed.understood){$("#prompt-status").textContent="I couldn’t identify a supported driver. Try hires, churn, growth, or a hiring delay.";return;}
+  setScenarioControls(parsed.overrides);$("#prompt-status").innerHTML=`Built <strong>${escapeHtml(parsed.label)}</strong>. All financial outputs were recalculated by the deterministic model.`;toast("AI scenario created as a temporary overlay");
+}
+
+function wireEvents(){
+  $$("[data-view]").forEach(el=>el.addEventListener("click",()=>showView(el.dataset.view)));$$("[data-view-jump]").forEach(el=>el.addEventListener("click",()=>showView(el.dataset.viewJump)));
+  ["#hires","#salary","#growth","#churn","#start-month"].forEach(id=>$(id).addEventListener("input",updateScenario));
+  $("#reset-scenario").addEventListener("click",()=>{setScenarioControls(baseline);toast("Working scenario reset to baseline")});
+  $("#run-prompt").addEventListener("click",buildPromptScenario);$("#scenario-prompt").addEventListener("keydown",e=>{if(e.key==="Enter")buildPromptScenario();});
+  $$(".prompt-chips button").forEach(button=>button.addEventListener("click",()=>{$("#scenario-prompt").value=button.textContent;buildPromptScenario();}));
+  $("#analyze-scenario").addEventListener("click",()=>{lastRecommendation=buildRecommendation(basePlan,scenarioPlan,"Working hiring scenario");renderMemo();openAI();submitAI("Analyze the current working scenario and recommend an action.");});
+  $("#open-ai").addEventListener("click",openAI);$("#close-ai").addEventListener("click",closeAI);$("#drawer-backdrop").addEventListener("click",closeAI);
+  $("#ai-form").addEventListener("submit",e=>{e.preventDefault();const q=$("#ai-query").value;submitAI(q);$("#ai-query").value="";});$$(".suggested-prompts button").forEach(button=>button.addEventListener("click",()=>submitAI(button.textContent)));
+  $("#theme-toggle").addEventListener("click",()=>{document.documentElement.classList.toggle("light");requestAnimationFrame(drawAllCharts);});
+  $("#role-search").addEventListener("input",e=>renderWorkforce(e.target.value));
+  $("#add-role").addEventListener("click",()=>{roles.push({role:"Strategic Finance Associate",dept:"Finance",start:"Aug",cost:121000,priority:"Medium",status:"Draft"});renderWorkforce();toast("Draft role added outside the approved baseline");});
+  $("#workforce-body").addEventListener("click",e=>{if(e.target.matches(".row-action"))toast("Role actions: delay, cancel, or move to scenario")});
+  $("#generate-memo").addEventListener("click",()=>{showView("memos");renderMemo();toast("Management memo regenerated from governed outputs")});$("#new-memo").addEventListener("click",()=>{renderMemo();toast("Memo regenerated from current scenario")});
+  $("#download-variance").addEventListener("click",()=>downloadText("september-variance-pack.csv",`Account,Budget,Actual,Variance,Favorability,Driver\n${varianceRows.map(r=>`"${r.account}",${r.budget},${r.actual},${r.delta},${r.status},"${r.driver}"`).join("\n")}`));
+  $("#export-view").addEventListener("click",()=>downloadText(`runwayos-${currentView}-snapshot.txt`,`RunwayOS — ${viewMeta[currentView][1]}\nModel: NexaFlow FY2026 v3.2\nRunway: ${scenarioPlan.metrics.runway.toFixed(1)} months\nEnding cash: ${formatCurrency(scenarioPlan.metrics.endingCash)}\nAnnual EBITDA: ${formatCurrency(scenarioPlan.metrics.annualEbitda)}`));
+  window.addEventListener("resize",drawAllCharts);
+}
+
+renderOverview();renderWorkforce();renderVariance();updateScenario();renderMemo();wireEvents();requestAnimationFrame(drawAllCharts);
+
+</script>
+</body>
+</html>
