@@ -1,0 +1,7 @@
+account,category,budget,actual,driver,type
+Subscription revenue,Revenue,548000,526000,Enterprise renewal slipped,revenue
+Services revenue,Revenue,76000,83000,Two implementations accelerated,revenue
+Payroll & benefits,People,488000,512000,Sales hires started early,expense
+Cloud infrastructure,COGS,94000,101000,Usage grew ahead of plan,expense
+Demand generation,Sales & marketing,122000,108000,Campaign shifted to Q4,expense
+Software & vendors,G&A,47000,53000,Annual contract true-up,expense

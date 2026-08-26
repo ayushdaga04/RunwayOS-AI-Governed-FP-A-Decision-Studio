@@ -1,0 +1,17 @@
+{
+  "company": "NexaFlow",
+  "fiscal_year": 2026,
+  "currency": "USD",
+  "opening_cash": 5200000,
+  "starting_mrr": 486000,
+  "monthly_growth_rate": 0.042,
+  "monthly_churn_rate": 0.021,
+  "gross_margin": 0.81,
+  "starting_headcount": 42,
+  "planned_hires": 5,
+  "average_salary": 116000,
+  "benefits_rate": 0.22,
+  "non_payroll_monthly_opex": 238000,
+  "minimum_cash_guardrail": 750000,
+  "note": "Deterministic synthetic assumptions for portfolio demonstration; not a real company forecast."
+}
