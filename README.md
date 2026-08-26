@@ -4,7 +4,7 @@
 
 RunwayOS is an interactive FP&A portfolio application for a fictional B2B SaaS company. It helps leadership test hiring, growth and churn decisions against cash-runway and minimum-liquidity guardrails.
 
-![RunwayOS FP&A decision studio dashboard](assets/dashboard-preview.jpg)
+![RunwayOS FP&A decision studio dashboard](assests/dashboard-preview.jpg)
 
 > **Portfolio disclosure:** NexaFlow and every financial record in this repository are synthetic. The project demonstrates analytical capabilities and does not claim realized results for a real business.
 
