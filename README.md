@@ -91,7 +91,7 @@ The workflow runs the tests, creates the static build and publishes the `dist` f
 
 NexaFlow and all data are synthetic. The application demonstrates modeled capabilities and does not claim realized savings, forecast accuracy, or work performed for a real company. The AI experience is intentionally deterministic and offline-ready so interview demonstrations never depend on an external API.
 
-See [docs/FINANCE_MODEL.md](docs/FINANCE_MODEL.md) for calculations and controls and [docs/INTERVIEW_GUIDE.md](docs/INTERVIEW_GUIDE.md) for the interview narrative.
+See [docs/FINANCE_MODEL.md](docs/FINANCE_MODEL.md) for calculations and controls 
 # ai-fpa-runway-workforce-planner
 # ai-fpa-runway-workforce-planner
 # ai-fpa-runway-workforce-planner
